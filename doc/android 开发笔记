@@ -1,0 +1,225 @@
+1 android UI定制
+Systemui  位置  ./frameworks/base/packages/SystemUI
+-------------------------------------------------------------------
+启动流程  http://blog.csdn.net/yihongyuelan/article/details/7710584
+1.	init->ServiceManager->Zygote->SystemServer->... ...
+SystemServer.java中startSystemUi()
+2.	其 onCreate()
+通过AIDL的方式获取了WindowManager的对象wm
+IWindowManager wm = IWindowManager.Stub.asInterface( 
+            ServiceManager.getService(Context.WINDOW_SERVICE)); 
+SERVICES[0] = wm.canStatusBarHide()//根据wm.canStatusBarHide()判断设备类型 
+                ? R.string.config_statusBarComponent 
+                : R.string.config_systemBarComponent; 
+
+	PhoneWindownManager中：
+	int shortSizeDp = shortSize 
+	        * DisplayMetrics.DENSITY_DEFAULT 
+	        / DisplayMetrics.DENSITY_DEVICE; 
+	mStatusBarCanHide = shortSizeDp < 600; 
+	mStatusBarHeight = mContext.getResources().getDimensionPixelSize( 
+	mStatusBarCanHide 
+	        ? com.android.internal.R.dimen.status_bar_height 
+	        : com.android.internal.R.dimen.system_bar_height); 
+ 
+	mHasNavigationBar = mContext.getResources().getBoolean( 
+	com.android.internal.R.bool.config_showNavigationBar); 
+
+这里通过shortSizeDp来判断当前设备的类型，如果当前屏幕的shortSizeDp<600dp，则系统会认为该设备是Phone反之则认为是Tablet。根据mStatusBarCanHide的值，设定StatusBar或者SystemBar(CombinedBar)的高度，以及是否显示NavigationBar。
+
+3	/statusbar/tablet/TabletStatusBar.java
+public void start() {
+        super.start(); // will add the main bar view
+    } // 如果是手机则还有addNavigationBar()
+
+
+4	statusbar/StatusBar.java
+在这里，完成了SystemUI的整个初始化以及设置过程，并最终呈现到界面上。在StatusBar中的start()方法主要完成了以下几个工作：首先获取需要在StatusBar上显示的各种icons。然后初始化一些属性。最后通过WindowManager的addView方法将StatusBar显示出来。
+View sb = makeStatusBarView(); 在statusbar/tabletstatusbar.java实现
+在其中注释掉addview()即可!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!(这里是布局,之后就可以在之前的start()中显示了)
+
+--------------------------------------------------------------------
+statusbar 
+高度 
+1. bar的高度 	res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height); 
+改掉所有的xml
+frameworks/base/core/res/ ./res/values/dimens.xml  <dimen name="status_bar_height">25dip</dimen>
+2.button的高度 	com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/back"
+android:layout_width="80dip"
+-------------------------------------------------------------------------------
+home和back居中
+先layout居中(自己),layout_gravity居中(内部元素居中)
+再android:layout_marginLeft="150dp"
+---------------------------------------------------------
+隐藏除home和back的其他UI组件
+在statusbar/tabletstatusbar.java实现
+在其中注释掉addview()即可!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!(这里是布局,之后就可以在之前的start()中显示了)
+------------------------------------------------------------
+Launcher   位置  ./packages/apps/Launcher2
+全屏: 1.java代码中修改// 这部分内容一定要在setContentView()之前调用
+
+        // 去掉窗口标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // 隐藏状态栏,全屏显示
+        // 第一种：
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // 第二种：（两种方法效果一样）
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        // WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	
+	2. xml
+	android:theme="@android:style/Theme.NoTitleBar
+	android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+
+---------------------------------------------------------------
+默认桌面位置
+./frameworks/base/core/res/res/drawable-large-nodpi/default_wallpaper.jpg
+
+--------------------------------------------------------------
+显示桌面
+在styles.xml中
+<style name="SAOTheme" parent="android:Theme.Wallpaper">  
+        <!-- windowNoTitle设置为packages/appstrue，去掉标题栏 -->  
+        <item name="android:windowNoTitle">true</item>  
+</style>  
+在AndroidManifest.xml中
+android:theme="@style/SAOTheme"  //自己在style.xml中定义可以加属性 ,如果直接用android:theme="@android:style/Theme.Wallpaper会有标题栏显示
+--------------------------------------------------------------------------
+设置壁纸  /我们只需要向系统发送一个“设置请求”就足够了/
+
+
+public void onSetWallpaper(View view) {  
+       //生成一个设置壁纸的请求  
+       final Intent pickWallpaper = new Intent(Intent.ACTION_SET_WALLPAPER);  
+       Intent chooser = Intent.createChooser(pickWallpaper,"chooser_wallpaper");  
+       //发送设置壁纸的请求  
+       startActivity(chooser);  
+   }  
+
+AndroidStudio已经贴心的预设了Menu，不过在搞了很久才搞定的
+res/menu/main.xml 直接可以使用
+<menu xmlns:android="http://schemas.android.com/apk/res/android">  
+    <item android:id="@+id/action_settings"  
+        android:title="settings"  
+        android:orderInCategory="100"  
+        android:showAsAction="never" />  
+</menu>  
+
+Activity上也已经做好了关联
+
+@Override  
+    public boolean onCreateOptionsMenu(Menu menu) {  
+    // Inflate the menu; this adds items to the action bar if it is present.  
+    getMenuInflater().inflate(R.menu.main, menu);  
+    return true;  
+}  
+
+我们只需要设定好动作 调用onSetWallpaper()方法就可以了
+public boolean onOptionsItemSelected(MenuItem item){  
+       switch (item.getItemId()) {  
+           case R.id.action_settings:  
+               onSetWallpaper();  
+               return true;  
+       }  
+       return false;  
+
+
+----------------------------------------------------------------------------
+设置横竖屏
+也可以在Java代码中通过setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)来设置。
+android:screenOrientation="landscape"
+portrait：竖屏 (肖像照) ， 显示时 高 度大于 宽 度 ；
+user：用户当前的首选方向；
+behind：继承Activity堆栈中当前Activity下面的那个Activity的方向；
+sensor：由物理感应器决定显示方向，它取决于用户如何持有设备，当 设备 被旋转时方向会随之变化——在横屏与竖屏之间；
+nosensor：忽略物理感应器——即显示方向与物理感应器无关，不管用户如何旋转设备显示方向都不会随着改变("unspecified"设置除外)；
+unspecified ：未指定，此为默认值，由Android系统自己选择适当的方向，选择策略视具体设备的配置情况而定，因此不同的设备会有不同的方向选择；
+
+android:configChanges="keyboardHidden|orientation" 我们横竖屏切换的时候会直接调用onCreate方法中的onConfigurationChanged方法，而不会重新执行onCreate方法，那当然如果不配置这个属性的话就会重新调用onCreate方法了
+但是在android4.0中无效，最后发现是需要加其他一个属性："screenSize"
+改成这样就可以了 ： android:configChanges="orientation|keyboardHidden|screenSize"
+
+
+Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+/* Now we can retrieve all display-related infos */
+int width = display.getWidth();
+int height = display.getHeight();
+int orientation = display.getOrientation();
+2、getWindowManager
+
+以下为引用内容： 
+public int getScreenOrientation(){
+Display getOrient = getWindowManager().getDefaultDisplay();
+int orientation = getOrient.getOrientation();
+
+补充一点，当前Activity产生事件弹出Toast和AlertDialog的时候Activity的生命
+周期不会有改变
+
+Activity运行时按下HOME键(跟被完全覆盖是一样的)：onSaveInstanceState -->
+onPause --> onStop       onRestart -->onStart--->onResume
+
+Activity未被完全覆盖只是失去焦点：onPause--->onResume
+---------------------------------------------
+获取屏幕大小
+Display mDisplay = getWindowManager().getDefaultDisplay();
+		int W = mDisplay.getWidth();
+		int H = mDisplay.getHeight();
+		Log.i("Main", "Width = " + W);
+		Log.i("Main", "Height = " + H);
+		
+		DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+		int W2 = mDisplayMetrics.widthPixels;
+		int H2 = mDisplayMetrics.heightPixels;
+
+--------------------------------------------------------------
+http://blog.sina.com.cn/s/blog_63f31f3401015r3b.html
+1.2 开机画面
+linux: drivers/video/logo
+android:framework/base/core/res/assets/images/
+或者 开机动画 
+adb push bootanimation.zip /system/media/
+
+/packages/apps
+----------------------------------------------------------------------------------
+2 Settings 位置 ./packages/apps/Settings
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------
+SystemClock.currentThreadTimeMillis(); // 在当前线程中已运行的时间    
+SystemClock.elapsedRealtime(); // 从开机到现在的毫秒书（手机睡眠(sleep)的时间也包括在内）    
+SystemClock.uptimeMillis(); // 从开机到现在的毫秒书（手机睡眠的时间不包括在内）    
+SystemClock.sleep(100); // 类似Thread.sleep(100);但是该方法会忽略InterruptedException    
+SystemClock.setCurrentTimeMillis(1000); // 设置时钟的时间，和System.setCurrentTimeMillis类似    
+   
+android.os.PowerManager
+PowerManager的flag的意思：
+Java代码
+// PowerManager的一般用法，请求和释放唤醒锁   
+PowerManager powerMgr = (PowerManager)   
+        getSystemService(Context.POWER_SERVICE);   
+int flags = PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP;   
+WakeLock wakeLock = powerMgr.newWakeLock(flags, "for debug purpose tag");   
+wakeLock.acquire(); // 获取唤醒锁   
+wakeLock.release(); // 释放唤醒锁   
+// 在游戏中，会将acquire放在onResume中；将release放在onPause，这样在程序运行时就可以保持屏幕常量；在程序处在后台时，就恢复原来的设置。   
+// PowerManager的其它api的使用   
+powerMgr.goToSleep(SystemClock.uptimeMillis() + 100); // 100ms后进入睡眠   
+powerMgr.isScreenOn(); // 屏幕是否亮着   
+powerMgr.userActivity(SystemClock.uptimeMillis()+100, true); // 相当于按home键，会引起从睡眠激活   
+// WakeLock的其它api   
+wakeLock.acquire(1000); // 获取唤醒锁，并在1000ms后释放   
+wakeLock.isHeld(); // 当前是否持有唤醒锁   
+-----------------------------------------------------------------------------------------------------
+
+
+

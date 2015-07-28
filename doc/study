@@ -1,0 +1,856 @@
+-------------------------start×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
+ubuntu 快捷键
+F11 全屏，alt + 数字切换程序
+dddddsddsd
+--------------------------------------------------------
+
+创建桌面链接
+$ sudo su
+# vim /usr/share/applications/eclipse.desktop
+写入以下内容
+[Desktop Entry]
+Name=Eclipse
+Comment=Eclipse SDK
+Encoding=UTF-8
+Exec=/usr/local/eclipse/eclipse
+Icon=/usr/local/eclipse/icon.xpm
+Terminal=false
+Type=Application
+Categories=Application;Development;
+
+给eclipse .desktop文件赋权 ,运行“chmod u+x eclipse.desktop“命令即可。
+找到/usr/share/applications/eclipse.desktop，右键选择 copy to desktop，即可。
+---------------------------------------------------
+
+搜狗输入法
+ sudo apt-get remove ibus
+sudo apt-get purge ibus ibus-gtk ibus-gtk3 ibus-pinyin* ibus-sunpinyin ibus-table python-ibus 
+sudo apt-get autoremove
+rm -rf ~/.config/ibus
+删除后系统设置变少了！！！！用下面的代码解决
+sudo apt-get install ubuntu-desktop
+
+
+皮肤：/usr/share/fcitx/skinfcitx
+sudo apt-get install unity-control-centersudo dpkg -i sogou_pinyin_linux_1.0.0.0011_amd64.deb # 第一次执行, 会提示缺少依赖库
+#sudo apt-get -f install                              # 安装sogou依赖
+#sudo dpkg -i sogou_pinyin_linux_1.0.0.0011_amd64.deb # 再次安装sogou, 就能安装成功
+#sudo reboot   
+
+
+
+sudo apt-get install fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt4 fcitx-googlepinyin  fcitx-libs fcitx-module-dbus fcitx-module-x11 fcitx-modules fcitx-pinyin fcitx-table fcitx-table-wubi fcitx-ui-classic
+
+
+
+sudo apt-get install fcitx fcitx-bin fcitx-module-dbus fcitx-modules fcitx-libs:amd64 fcitx-libs-qt:amd64 fcitx-data libgettextpo0
+
+sudo dpkg --get-selections | grep fcitx
+sudo apt-get install fcitx-config-gtk
+
+
+
+输入法切换
+sudo apt-get install fcitx-table-all
+sudo apt-get install im-switch
+im-switch -s fcitx -z default
+
+ ------------------------------------------------------
+chromium flash
+sudo apt-get update
+sudo apt-get install chromium-browser
+sudo apt-get install pepperflashplugin-nonfree
+sudo update-pepperflashplugin-nonfree --install
+sudo apt-get remove chromium-browser pepperflashplugin-nonfree
+
+-------------------------------------------------------------------------
+
+        try {
+                                                 Socket socket = new 
+Socket("127.0.0.1",8792);
+                                                 OutputStream mOut = 
+socket.getOutputStream();
+                                                 mOut.write(flag);
+                                                 mOut.close();
+                                                 socket.close();
+                                         } catch (UnknownHostException e) {
+                                                 // TODO Auto-generated 
+catch block
+                                                 e.printStackTrace();
+                                         } catch (IOException e) {
+                                                 // TODO Auto-generated 
+catch block
+                                                 e.printStackTrace();
+                                         }
+
+
+
+-------------------------------------------------
+jdk安装
+general name -- 这是指一系列功能相似的程序的“公用”名字（包括绝对路径），比如 /usr/bin/editor。
+link -- 这是指一个 alternative 在 /etc/alternative 中的名字，比如 editor。
+alternative -- 顾名思义，这是指一个可选的程序所在的路径（包括绝对路径），比如 /usr/bin/vim
+-auto，--display 和 --config 跟的都是 link
+ --install gen link alt pri
+--remove name path
+
+
+sudo add-apt-repository "deb http://archive.canonical.com/ lucid partner"  
+sudo add-apt-repository "deb http://archive.canonical.com/ubuntu maverick partner"  
+或者手动打开 /etc/apt/sources.list添加：此地址不可用
+jdk6地址http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
+jdk5地址http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase5-419410.html
+jdk7地址
+---------------------------
+	sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/java/jdk6/bin/java 300  
+	sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/java/jdk6/bin/javac 300  
+	sudo update-alternatives --install /usr/bin/jar jar /usr/lib/jvm/java/jdk6/bin/jar 300   
+	sudo update-alternatives --install /usr/bin/javah javah /usr/lib/jvm/java/jdk6/bin/javah 300   
+	sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/java/jdk6/bin/javaws 300
+
+	sudo update-alternatives --install /usr/bin/javap javap /usr/lib/jvm/jdk1.6.0_<version>/bin/javap 60
+	sudo update-alternatives --install /usr/bin/javadoc javadoc /usr/lib/jvm/jdk1.6.0_<version>/bin/javadoc 60
+
+    update-alternatives --config javac
+
+    update-alternatives --config java
+
+    update-alternatives --config javaws
+
+    update-alternatives --config jar
+
+jdk配置
+sudo vi /etc/profile  
+#JAVAEVIRENMENT  
+export JAVA_HOME="/usr/lib/jvm/java/jdk1.6.0_34"  
+export JRE_HOME=$JAVA_HOME/jre  
+export CLASSPATH=$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH  
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH 
+
+sudo source ~/.bashrc  
+
+
+然后执行,通过这一步选择系统默认的jdk:
+sudo update-alternatives --config java  
+sudo update-alternatives --config javac  
+sudo update-alternatives --config javah  
+-------------------------------------------------
+eclipse
+
+ADT
+https://dl-ssl.google.com/android/eclipse/
+直接下载http://developer.android.com/sdk/installing/installing-adt.html
+cd ~/bin
+ln -s /home/yanggang/eclipse/eclipse eclipse
+
+options->force https to http
+
+1.
+Windows在C:\WINDOWS\system32\drivers\etc目录下，Linux用户打开/etc/hosts文件。
+打开文件后添加以下内容。
+
+#Google主页
+203.208.46.146 www.google.com
+#这行是为了方便打开Android开发官网 现在好像不VPN也可以打开
+74.125.113.121 developer.android.com
+#更新的内容从以下地址下载
+203.208.46.146 dl.google.com
+203.208.46.146 dl-ssl.google.com
+
+2.不显示api ,packages->show obsolete packages
+
+
+https://dl-ssl.google.com/android/repository/addons_list.xml
+https://dl-ssl.google.com/android/repository/repository.xml
+https://dl-ssl.google.com/android/repository/addon.xml
+----------------------------------------------------
+tftp
+sudo apt-get install tftpd-hpa
+sudo apt-get install tftp-hpa(如果不需要客户端可以不安装)
+sudo vim /etc/default/tftpd-hpa
+TFTP_USERNAME=”tftp”
+
+TFTP_ADDRESS=”0.0.0.0:69″
+
+TFTP_DIRECTORY=”tftp根目录” #服务器目录,需要设置权限为777,chomd 777
+
+TFTP_OPTIONS=”-l -c -s”
+#TFTP_OPTIONS="--secure"                   //可以查看mantftpd,看各种参数的意义。
+
+sudo /etc/init.d/xinetd restart
+sudo service tftpd-hpa restart
+
+板子上命令
+tftp -gr Kuaiya321.apk 192.168.0.101
+
+机器上命令
+tftp ip -c get remotefilename
+---------------------------------------------------
+ftp
+http://zhangge.net/3987.html
+
+sudo vi /etc/vsftpd.conf
+anon_root=/home/ftp 
+local_root=/home/ftp
+dirmessage_enable=YES：用户进入一个目录后，是否给出信息提示
+.message这个文件复制到各个用户的家目录中
+
+
+anon_other_write_enable=YES   //允许匿名用户具有建立目录，上传之外的权限，如重命名，删除
+no_anon_password=YES   //匿名用户login时不询问口令
+ftp_username= </pre>
+
+匿名用户所使用的系统用户名。默认下，此参数在配置文件中不出现，值为ftp
+
+
+若chroot_local_user 设置为NO，chroot_list_enable设置为NO，则所有用户都是可以切换到默认目录以外的。 
+若chroot_local_user 设置为YES，chroot_list_enable设置为NO，则锁定FTP登录用户只能在其默认目录活动，不允许切换到默认目录以外。 
+若chroot_local_user 设置为YES，chroot_list_enable设置为YES，则chroot_list_file所指定的文件里面的用户列表都可以访问默认目录以外的目录，而列表以外的用户则被限定在各自的默认目录活动。 
+若chroot_local_user设置为NO，chroot_list_enable设置为YES，则chroot_list_file所指定的文件里面的用户列表都被限定在各自的默认目录活动，而列表以外的用户则可以访问默认目录以外的目录。 
+sudo service vsftpd restart
+
+seccomp_sandbox=NO
+----------------------------------------------------
+乱码
+GBK乱码”，代码:
+°²Àï¿ü ÒÁ¸ñÀ³Ï£ÑÇË¹,°²Àï¿ü ÒÁ¸ñÀ³Ï£ÑÇË¹
+convmv -r -f utf8 -t iso88591 * --notest --nosmart && convmv -r -f gbk -t utf8 * --notest --nosmart
+
+iconv -f gb2312 -t utf8 -c -o new.txt old.txt   -c 忽略输出中的无效字符
+文件名乱码 sudo convmv -f gbk -t utf-8 -r --notest  /home 
+“ascii乱码
+%E5%8C%BB%E4%BF%9D
+echo 乱码原文 | ascii2uni -a J
+
+　　
+
+
+
+ctags
+<C - ]>
+<C - t>
+
+vim gedit
+安装 tweak 调整monospace font 即可
+
+set tags=/home/hjw951/arm/linux-2.6.12/tags
+set tags=/home/wx/trunk/4412/smdk4x12_android_4.0/frameworks/tags
+set autochdir
+
+sudo vi /etc/vim/vimrc 
+加入以下配置参数
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936
+set fileencoding=utf-8
+encoding: Vim 内部使用的字符编码方式，包括 Vim 的 buffer (缓冲区)、菜单文本、消息文本等
+fileencoding: Vim 中当前编辑的文件的字符编码方式,保存文件时
+fileencodings: Vim 启动时会按照它所列出的字符编码方式逐一探测
+termencoding: Vim 所工作的终端 (或者 Windows 的 Console 窗口) 的字符编码方式
+
+gedit
+执行 sudo apt-get install dconf-editor
+找到 org/gnome/gedit/preferences/encodings auto-detected 和auto-detected加入 GB18030,GBK,GB2312,BIG5 ！！注意！把GB18030放到第一位。
+
+vim 分屏技巧
+:sp 横向切分一个窗口，或者 :vsp 纵向切分一个窗口，敲入命令后，你将看到两个窗口打开的是同一个文件
+:e new.trace，在其中一个窗口里打开另一个文件
+在普通模式下ctrl+w，再按一下w，可以在两个窗口之间切换
+
+使用 h，j，k，l
+motion---------------------------------
+在当前行里面有效的移动光标 
+fx：移动光标到当前行的下一个x处。很明显，x可以是任意一个字母，而且你可以使用;来重复你的上一个f命令。
+tx：和上面的命令类似，但是是移动到x的左边一个位置。（这真的很有用）
+Fx：和fx类似，不过是往回找。
+w：光标往前移动一个词。
+b： 光标往后移动一个词。
+0： 移动光标到当前行首。
+^：移动光标到当前行的第一个字母位置。
+$： 移动光标到行尾。
+)： 移动光标到下一个句子。
+(： 移动光标到上一个句子。
+
+在整个文件里面有效移动光标
+<C-F>：向下移动一屏。
+<C-B>：向上移动一屏。
+G：到文件尾
+numG：移动光标到指定的行（num）。（比如10G就是到第10行）
+gg：到文件首
+H：移动光标到屏幕上面
+M：移动光标到屏幕中间
+L：移动光标到屏幕下面
+*：读取光标处的字符串，并且移动光标到它再次出现的地方。
+#：和上面的类似，但是是往反方向寻找。
+/text：从当前光标处开始搜索字符串text，并且到达text出现的地方。必须使用回车来开始这个搜索命令。如果想重复上次的搜索的话，按n。
+？text：和上面类似，但是是反方向。
+ma：在当前光标的位置标记一个书签，名字为a。书签名只能是小写字母。你看不见书签的存在，但它确实已经在那里了。
+`a：到书签a处。注意这个不是单引号，它一般位于大部分键盘的1的左边。
+`.：到你上次编辑文件的地方。这个命令很有用，而且你不用自己去标记它。
+-------------------------------------------------
+
+使用关键词自动完成
+你只需要输入开始几个字母（比如iAmAL），然后按<C-N>（按住Ctrl，再按N）或者<C-P>。如果VIM没有给出你想要的词，基本按，直到你满意为止，VIM会一直循环它找到的匹配的字符串。
+
+聪明的进入插入模式
+i：在当前字符的左边插入
+I：在当前行首插入
+a：在当前字符的右边插入
+A：在当前行尾插入
+o：在当前行下面插入一个新行
+O：在当前行上面插入一个新行
+c{motion}：删除motion命令跨过的字符，并且进入插入模式。比如：c$，这将会删除从光标位置到行尾的字符并且进入插入模式。ct！，这会删除从光标位置到下一个叹号（但不包括），然后进入插入模式。被删除的字符被存在了剪贴板里面，并且可以再粘贴出来。
+d{motion}：和上面差不多，但是不进入插入模式。
+
+ 有效的移动大段的文本
+ 
+3.1  使用可视选择（visual selections）和合适的选择模式
+v：按字符选择。经常使用的模式，所以亲自尝试一下它。
+V：按行选择。这在你想拷贝或者移动很多行的文本的时候特别有用。
+<C-V>：按块选择。非常强大，只在很少的编辑器中才有这样的功能。你可以选择一个矩形块，并且在这个矩形里面的文本会被高亮。
+ 
+3.2  在可视选择模式下剪切和拷贝
+一旦你高亮了选区，你或许想进行一些操作：
+d：剪贴选择的内容到剪贴板。
+y：拷贝选择的内容到剪贴板。
+c：剪贴选择的内容到剪贴板并且进入插入模式。
+ 
+3.3  在非可视选择模式下剪切和拷贝
+如果你很清楚的知道你想拷贝或者剪切什么，那你根本就不需要进入可视选择模式。这样也会节省时间：
+
+d{motion}：剪切motion命令跨过的字符到剪贴板。比如，dw会剪切一个词而dfS会将从当前光标到下一个S之间的字符剪切至剪贴板。
+y{motion}：和上面类似，不过是拷贝。
+c{motion}：和d{motion}类似，不过最后进入插入模式。
+
+cc：剪切当前行并且进入插入模式。
+D：剪切从光标位置到行尾到剪贴板。
+Y：拷贝当前行。
+C：和D类似，最后进入插入模式。
+x：剪切当前字符到剪贴板。
+s：和x类似，不过最后进入插入模式。
+
+qregister：记录宏到寄存器register，这里register是任意的你的寄存器的名字。比如qa，将会记录并且把宏存在寄存器a里面。
+[command]................
+q：结束宏的记录。
+@register：使用存在寄存器register的宏。比如@a，将会使用存在寄存器a里面的宏。
+
+用VIM写代码
+VIM是一个绝好的编辑器来写代码，因为它有一些特性是专门为程序员而设。这里是一些常用的：
+
+]p：和p的功能差不多，但是它会自动调整被粘贴的文本的缩进去适应当前代码的位置。试一下！
+%：匹配花括号，方括号，括号等。在一个括号的上面，然后按%，鼠标就会出现在匹配的另外一半括号处。
+gd：到达光标所在处函数或者变量的定义处。
+K：在Man里面查找光标当前所在处的词。
+
+
+--------------------------------
+adb -s device shell
+adb shell am start com.ihome.android.launcher2/.activity.MainActivity
+adb shell am start com.android.launcher/com.android.launcher2.Launcher
+android 包查看和代码启动.launcher
+adb uninstall 包名（不需要.apk和-2等，在/data/app下看包名字）
+aapt dump badging file
+adb shell am start -n 
+cat /dev/input/mice
+hexdump mice
+aapt d badging org.dsandler.apps.markers_033651.apk
+adb shell am start -n org.dsandler.apps.markers/com.google.android.apps.markers.MarkersActivity
+
+adb shell am force-stop [Packege]  or
+ps | grep [Pachege]
+kill id
+
+out/target/product/m201/system/bin/mouse_enable
+
+------------------------------------------------------
+64位android编译错误总结
+注意，先安装环境和source\lunch
+1.i686-linux-gcc问题
+install gcc-multilib sudo apt-get install g++-multilibsanguosha
+2.libstdc++.so
+sudo apt-get install libc6-i386
+sudo apt-get install libstdc++6 
+$sudo apt-get install lib32stdc++6
+3.
+sudo apt-get install ia32-libs 或下面的
+lib32z1 lib32ncurses5 lib32bz2-1.0
+4./bin/bash: flex: command not found
+sudo apt-get install flex
+5.git
+gnupg
+flex
+bison
+gperfsanguosha
+build-essential
+zip
+curl
+libc6-dev
+libncurses5-dev:i386
+x11proto-core-dev
+libx11-dev:i386
+libreadline6-dev:i386
+g++-multilib
+mingw32
+tofrodos
+python-markdown
+libxml2-utils
+xsltproc
+zlib1g-dev:i386
+
+
+6.
+ GEN     /home/wx/trunk/amlogic/out/target/product/m201/obj/KERNEL_OBJ/Makefile
+out/target/common/obj/PACKAGING/public_api.txt:14932: error 4: Added public method android.net.wifi.WifiManager.handleWifiApToggled
+out/target/common/obj/PACKAGING/public_api.txt:21435: error 5: Added public field android.provider.Settings.Global.WIFIAP_ON
+out/target/common/obj/PACKAGING/public_api.txt:21529: error 5: Added public field android.provider.Settings.Secure.WIFIAP_ON
+out/target/common/obj/PACKAGING/public_api.txt:21655: error 5: Added public field android.provider.Settings.System.WIFIAP_ON
+
+
+7.直接查看是什么，直接装，无需上网了！！！！！！！！！！！！！！！！！！！！！
+dpkg-query -S libgtk-x11-2.0.so.0
+libgtk2.0-0:amd64: /usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so.0
+libgtk2.0-0:amd64: /usr/lib/x86_64-linux-gnu/libgtk-x11-2.0.so.0.2400.2
+可知在libgtk2.0-0
+再sudo apt-get install libgtk2.0-0:i386
+
+
+libwxgtk2.6-dev not found
+sudo apt-cache search libwxgtk*  >>
+
+libwxgtk-media2.8-0 - wxWidgets Cross-platform C++ GUI toolkit (GTK+ media library runtime)
+libwxgtk-media2.8-dbg - wxWidgets Cross-platform C++ GUI toolkit (GTK+ media library debug)
+libwxgtk-media2.8-dev - wxWidgets Cross-platform C++ GUI toolkit (GTK+ media library development)
+libwxgtk-media3.0-0 - wxWidgets Cross-platform C++ GUI toolkit (GTK+ media library runtime)
+libwxgtk-media3.0-0-dbg - debugging symbols for the wxGTK media library
+libwxgtk-media3.0-dev - wxWidgets Cross-platform C++ GUI toolkit (GTK+ media library development)
+libwxgtk2.8-0 - wxWidgets Cross-platform C++ GUI toolkit (GTK+ runtime)
+libwxgtk2.8-dbg - wxWidgets Cross-platform C++ GUI toolkit (GTK+ debug)
+libwxgtk2.8-dev - wxWidgets Cross-platform C++ GUI toolkit (GTK+ development)
+libwxgtk3.0-0 - wxWidgets Cross-platform C++ GUI toolkit (GTK+ runtime)
+libwxgtk3.0-0-dbg - debugging symbols for the wxGTK GUI toolkit library
+libwxgtk3.0-dev - wxWidgets Cross-platfoarrm C++ GUI toolkit (GTK+ development)
+
+command uudecode not found 
+sudo apt-get install sharutils
+sudo apt-get install g++-4.4-multilib 
+******************************
+You have tried to change the API from what has been previously approved.
+
+To make these errors go away, you have two choices:
+   1) You can add "@hide" javadoc comments to the methods, etc. listed in the
+      errors above.
+
+   2) You can update current.txt by executing the following command:
+         make update-api
+
+      To submit the revised current.txt to the main Android repository,
+      you will need approval.
+******************************
+
+
+
+7.menuconfig错误
+HOSTLD  scripts/kconfig/mconf
+scripts/kconfig/mconf.o: In function `show_help':
+mconf.c:(.text+0x764): undefined reference to `stdscr'
+scripts/kconfig/lxdialog/checklist.o: In function `print_arrows':
+checklist.c:(.text+0x41): undefined reference to `wmove'
+checklist.c:(.text+0x61): undefined reference to `acs_map'
+checklist.c:(.text+0x69): undefined reference to `waddch'
+checklist.c:(.text+0x7b): undefined reference to `waddnstr'
+checklist.c:(.text+0x8c): undefined reference to `wmove'
+checklist.c:(.text+0xb3): undefined reference to `acs_map'
+checklist.c:(.text+0xbb): undefined reference to `waddch'
+checklist.c:(.text+0x10b): undefined reference to `acs_map'
+
+
+
+
+sudo apt-get install libncurses5  libncurses5-dev
+
+
+8 arm-hisiv-linux-... find device/ -type f -name "arm-hisiv-linux-..."
+------------------------------------------------------------------
+device/amlogic/m201/quick_build_kernel.sh menuconfig
+device/amlogic/m201/quick_build_kernel.sh savedefconfig
+
+
+
+
+使用“cat /proc/devices”命令查看加载的模块
+1、用adb将镜像文件push到设备上
+uboot：		adb push u-boot.bin    /data
+kernel: 	adb push boot.img      /data
+recovery: 	adb push recovery.img  /data
+
+2、用cat或者dd命令将镜像文件导入到相应分区
+uboot：		cat /data/u-boot.bin  	>  /dev/block/bootloader
+kernel:		cat /data/boot.img    	>  /dev/block/boot
+recovery:	cat /data/recovery.img 	>  /dev/block/recovery
+
+
+3、重启系统
+可以用遥控器重启，或者执行reboot命令。
+
+
+另外：
+system和data分区里面都是单独的文件，可以直接进行替换测试。
+如果修改了uboot的环境变量，可以在uboot命令行下执行defenv命令，对/dev/env分区进行重置
+
+
+快速更新boot.img cat boot.img > /dev/block/boot 
+
+命令mm
+在android下编译c程序不能在common（内核目录下）进行 ,先ｓｏｕｒｃｅ make.sh
+比如在amlogic/jinglun/src/下，依照Android.mk 设置目标文件     
+
+内核头文件：           /external/kernel-headers/original/linux   
+---------------------------------------------------
+android编译进内核
+需要在上层目录登记我们的新内核
+在drivers/char/Kconfig中加入：source“drivers/char/xxoo/Kconfig”b).
+在drivers/char/Makefile中加入：obj-$(CONFIG_LT_XXOO)+=xxoo
+
+
+
+
+
+比较out/target/product/m201/obj/KERNEL_OBJ$ vim .config 然后更新下面的文件
+永久更改Kconfig amlogic/common/arch/arm/configs/meson8b_defconfig
+
+
+
+--- .config	2014-08-26 16:27:59.967313987 +0800
++++ config.bak	2014-08-26 16:26:51.659314849 +0800
+@@ -2745,9 +2745,9 @@
+ # USB HID support
+ #
+ CONFIG_USB_HID=y
+-CONFIG_HID_PID=y
+-CONFIG_USB_HIDDEV=y
+-CONFIG_HID_HUIONTABLET=m
++# CONFIG_HID_PID is not set
++# CONFIG_USB_HIDDEV is not set
++# CONFIG_HID_HUIONTABLET is not set
+ 
+ #
+ # I2C HID support
+
+
+
+
+查看设备结点
+ls -l /dev/input
+查看设备信息
+ls -l /proc/bus/input/
+cat /proc/bus/input/devices
+查看input class信息
+ ls /sys/class/input
+
+
+
+
+------------------------------------------------------
+迅雷 电驴 资源
+
+
+    网上搜索了一下，迅雷离线的验证是通过一个cookies 文件来记录验证下载的，
+
+    所以，第一步是先登录迅雷，导出迅雷的cookies文件，然后用aria2c或者wget 加载 cookies进行下载，
+
+    用ff的一个插件 export cookies
+    https://addons.mozilla.org/en-US/firefox/addon/export-cookies/
+
+    导出cookies后，找到包含 gdriveid 字眼的那一行，实际上，下载迅雷离线，加载的cookies内容就是这一样在起作用，
+
+    所以只需要保留这一样的内容就行了，比如保存为xunlei.txt
+
+    wget -c --load-cookies=xunlei.txt "http://xunlei.url"
+
+    aria2c -s 5 -c --load-cookies=xunlei.txt "http://xunlei.url"
+
+    不过，上面这样使用起来很不方便，每次都要输入一大堆命令，
+
+    不过linux上有一个 alias 参数 ，所以我就在 .bashrc中写入了下面这一段话
+
+    alias xunlei='aria2c -s 5 -c --load-cookies=/home/user/.xl.txt'
+
+    其中，.xl.txt 里面存放的是上面提到的那行cookies 内容，
+
+    这样，我可以使用 xunlei "http://download.url" 来下载迅雷离线内容了，
+
+    如果要批量下载，可以使用 -i 参数，把要下载的文件链接先存在一个文本文件里面
+
+    xunlei -i download.txt
+
+    已知的问题： aria2c 处理不好中文编码，中文文件名会变成乱码，一个解决方法是使用 -o(小写字母o）指定文件名
+
+
+-------------------------------------------------------------
+mouse_enable
+frameworks/base/services/input$ vi EventHub.cpp 
+应该是在connect之前就设置了套接字非阻塞模式导致的，把设置套接字为非阻塞模式放到connect之后就可以解决问题了
+connect failed:Operation now in progress
+
+---------------------------------------
+
+top命令??????????????????????????????????????????////
+--------------------------------------------
+linux 内核目录
+/usr/src/linux-headers-3.13.0-34
+ Arch ：arch子目录包括了所有和体系结构相关的核心代码。它的每一个子目录都代表一种支持的体系结构，例如i386就是关于intel cpu及与之相兼容体系结构的子目录。PC机一般都基于此目录；  
+　　· Include: include子目录包括编译核心所需要的大部分头文件。与平台无关的头文件在 include/linux 子目录下，与 intel cpu相关的头文件在include/asm-i386子目录下,而include/scsi目录则是有关 scsi设备的头文件目录；  
+　　· Init： 这个目录包含核心的初始化代码(注：不是系统的引导代码)，包含两个文件main.c和Version.c，这是研究核心如何工作的一个非常好的起点。 
+　　· Mm ：这个目录包括所有独立于 cpu 体系结构的内存管理代码，如页式存储管理内存的分配和释放等；而和体系结构相关的内存管理代码则位于arch/*/mm/，例如arch/i386/mm/Fault.c  
+　　· Kernel：主要的核心代码，此目录下的文件实现了大多数linux系统的内核函数，其中最重要的文件当属sched.c；同样，和体系结构相关的代码在arch/*/kernel中；  
+　　· Drivers： 放置系统所有的设备驱动程序;每种驱动程序又各占用一个子目录：如，/block 下为块设备驱动程序，比如ide（ide.c）。如果你希望查看所有可能包含文件系统的设备是如何初始化的，你可以看drivers/block/genhd.c中的device_setup()。它不仅初始化硬盘，也初始化网络，因为安装nfs文件系统的时候需要网络  
+Lib放置核心的库代码; Net,核心与网络相关的代码; Ipc,这个目录包含核心的进程间通讯的代码;Fs ,所有的文件系统代码和各种类型的文件操作代码，它的每一个子目录支持一个文件系统，例如fat和ext2;Scripts, 此目录包含用于配置核心的脚本文件等。一般，在每个目录下，都有一个 .depend 文件和一个 Makefile 文件，这两个文件都是编译时使用的辅助文件，仔细阅读这两个文件对弄清各个文件这间的联系和依托关系很有帮助；而且，在有的目录下还有Readme 文件，它是对该目录下的文件的一些说明，同样有利于我们对内核源码的理解。 
+
+
+----------------------------------------------
+sudo apt-get install VLC//播放器
+sudo apt-get install VLC
+日历：
+sudo add-apt-repository ppa:atareao/atareao
+sudo apt-get update
+sudo apt-get install calendar-indicator
+
+
+
+wine安装
+乱码
+http://blog.csdn.net/cxin917/article/details/7228619
+env LANG=zh_CN.UTF-8 wine
+
+sudo add-apt-repository ppa:ubuntu-wine/ppa
+
+sudo apt-get update && sudo apt-get install wine1.7
+winecfg 
+
+64-32
+export WINEARCH="win32"
+sudo rm -rf ~/.wine
+
+中文问题
+~/ .wine/drive_c/windows/Fonts/ 
+winetricks corefonts
+qiangonglirang
+
+如果安装包的名字不是以 exe 结尾
+wine start xxx.xxx
+
+从真实windowsXP的system32目录下拷贝mfc42.dll,msvcp71.dll,msvcr71dll三个文件到wine的windows的system32目录下，路径类似/home/用户名/.wine/drive_c/windows /system32。（打开文件浏览器的显示隐藏文件功能就可以看到.wine目录，或者用命令行操作）。
+下载atl71.dll，覆盖迅雷安装目录中program子目录下的同名文件
+
+修改 Wine 设置: 
+运行安装包之前, 先打开 winecfg. 打开 "函数库" 标签页, 在 "新增函数库顶替" 的输入框中输入 
+输入 winemenubuilder.exe (下拉菜单列表中没有这一项). 
+点击 "添加", 然后在 "已有函数库顶替" 列表中选中它, 点击 "编辑" ,
+然后在列表中选择 "停用", 然后点击 "确定"
+除去所有新装快捷方式、wine安装的程序菜单，恢复初始wine菜单。
+
+rm -f $HOME/.config/menus/applications-merged/wine*
+rm -rf $HOME/.local/share/applications/wine
+rm -f $HOME/.local/share/desktop-directories/wine*
+rm -f $HOME/.local/share/icons/????_*.{xpm,png}
+rm -f $HOME/.local/share/icons/*-x-wine-*.{xpm,png}
+
+[编辑] 常用dll、组件
+运行Winetricks程序，安装字体：corefonts，然后从XP系统拷贝simhei.ttf simsun.ttc至Fonts目录
+
+安装DLL或组件：cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30
+
+已成功Wine：Office 2003、弈城、迷你迅雷、迅雷7、QtCreator、MSVC2010以及众多绿色小工具！
+
+
+
+
+tar -xjvf a.tar.bz2 -C /usr/share/stardict/dic
+-------------------------------------------------------------
+
+hg clone http://172.16.55.55:8000/ hd_v200_600
+ source build/envsetup.sh
+lunch Hi3716CV200-eng
+make bigfish -j2 2>&1 | tee bigfish.log
+
+./mk-ics.sh caching svn Hi3716CV200
+ln -s out/target/product/Hi3716CV200/cached_files pkg_Hi3716CV200_current_files 
+./mk-ics.sh local-pkg ota Hi3716CV200
+
+hg update --clean // 取消所有改变你／即－Cqqqqqqqqq
+
+--------------------------------------------------------
+svn checkout -r <rev>
+hg update -C -r <rev>
+git reset --hard -r <rev>恢复制定版本
+
+echo "# gittest" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/flymoondust/gittest.git
+git@github.com:flymoondust/gittest.git　（ｓｓｈ版本）
+git push -u origin master
+
+git  commit -m "changes log"  
+提交到本地的版本控制库里
+git push -u origin master  //origin可以改为test等其他名字
+
+//如果你是第一次提交项目，这一句非常重要，这是你本地的当前的项目与远程的哪个仓库建立连接。
+$ git remote -v  //查看你当前项目远程连接的是哪个仓库地址。
+$ git push -u origin master  //将本地的项目提交到远程仓库中。
+
+假如本地已经存在了这个项目，而仓库中又有一新的更新，如何把更的合并到本地的项目中？
+$ git fetch origin    //取得远程更新，这里可以看做是准备要取了
+$ git merge origin/master  //把更新的内容合并到本地分支/master
+
+Switching remote URLs from HTTPS to SSH
+git remote set-url origin git@github.com:USERNAME/OTHERREPOSITORY.git
+
+svn st | grep '^\?' | tr '^\?' ' ' | sed 's/[ ]*//' | sed 's/[ ]/\\ /g' | xargs svn add
+或者
+svn st | awk '{if ( $1 == "?") { print $2}}' | xargs svn add 
+-------------------------------------------------
+xgcom
+http://code.google.com/p/xgcom/  src address
+
+sudo apt-get install automake sudo apt-get install libglib2.0-dev sudo apt-get install libvte-dev sudo apt-get install libgtk2.0-dev
+./autogen.sh ; make; sudo make install
+
+----------------------------------------------
+
+busybox ifconfig eth0 172.16.55.36 netmask 255.255.255.0
+$ busybox route add default gw 172.16.55.254
+$ setprop net.dns1 172.16.53.2
+
+tftp -gr filename tftp_server_ip
+tftp -pl filename tftp_server_ip
+
+printenv
+
+    setenv ipaddr 172.16.55.36
+    setenv netmask 255.255.255.0
+
+saveenv
+----------------------------------------
+ubuntu ip 
+直接修改配置文件
+
+Ubuntu 系统配置文件在：/etc/network/interfaces
+编辑配置文件：sudo vi /etc/network/interfaces
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address ＩＰ地址
+gateway 网关
+netmask 子网掩码
+#network 192.168.2.0
+#broadcast 192.168.2.255
+sudo /etc/init.d/networking restart－－重启网卡；使之配置生效
+
+需要配置ＤＮＳ
+sudo vi //etc/resolv.conf  
+search chotim.com
+nameserver ＤＮＳ服务器地址
+sudo /etc/init.d/networking restart－－重启网卡服务即可
+echo "1" >/proc/sys/net/ipv4/ip_forward (临时)
+# vi /etc/sysctl.conf --> net.ipv4.ip_forward=1 (永久开启)
+----------------------------------------------------------
+双网卡
+route add－net10.119.140.0 netmask255.255.255.0 eth0
+　　route add－net202.114.3.0 netmask255.255.255.0 eth1
+修改ip地址
+即时生效:
+# ifconfig eth0 192.168.0.20 netmask 255.255.255.0
+启动生效:
+修改/etc/sysconfig/network-scripts/ifcfg-eth0
+修改default gateway
+即时生效:
+# route add default gw 192.168.0.254
+启动生效:
+修改/etc/sysconfig/network-scripts/ifcfg-eth0
+修改dns
+修改/etc/resolv.conf
+修改后可即时生效，启动同样有效
+修改host name
+即时生效:
+# hostname fc2
+启动生效:
+修改/etc/sysconfig/network
+-------------------------------------------------------------
+Intent intent1 = new Intent();
++	    intent1.setComponent(new ComponentName("com.ihome.android.launcher2", "com.ihome.android.launcher2.activity.MainActivity"));
++	    intent1.addCategory("android.intent.category.HOME");
++	    intent1.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT
++                    |Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
++	    startActivity(intent1);
++            mPackageMonitor.unregister();
++            mRegistered = false;
++            finish();
++	    return;
+-------------------------------------------------------------------
+android
+当运行一个命令的时候出现
+rm failed for CoeeRoat.apk, Read-only file system
+adb shell mount -o remount rw /system  挂载设备
+
+内置应用：
+adb shell mount -o remount rw /system
+adb push clock.apk /system/app/clock.apk
+
+删除内置应用：
+adb shell mount -o remount rw /system
+adb shell
+cd system/app
+rm -rf clock.apk
+
+bat 文件：
+adb shell mount -o remount,rw /dev/block/mtdblock3 /system
+adb push sssss  /system/bin/rota
+adb shell sync
+adb shell chown root.shell /system/bin/rota
+adb shell chmod 6755 /system/bin/rota
+adb shell rm -r /system/xbin/sssss
+adb shell sync
+adb shell ln -s /system/bin/sssss /system/xbin/sssss
+adb shell sync
+adb shell mount -o remount,ro /dev/block/mtdblock3 /system
+
+//adb多个设备操作 
+adb device  ＃查看设备名称
+adb -s '设备名' 指令  ＃进行例行操作
+pause
+---------------------------------------
+jpg 2 png
+mogrify -format png *.jpg
+
+
+
+---------------------------------
+ssh 传递文件  （注意本地的文件夹权限问题）
+scp -r -P 2222 root@www.vpser.net:/root/lnmp0.4.tar.gz /home/lnmp0.4.tar.gz
+
+--------------------------------------------
+shell的历史命令 
+fc [ -e ename]  [-nlr] [first [ last ] ]
+  fc  -e  [old=new] [commmand]
+  fc  -s  [old=new] [commmand]
+fc -l echo
+ fc -e vi 502  510
+
+!5
+!!
+---------------------------
+使用rmmod会出现 rmmod : chdir(/lib/modules): No such file or directory ？
+内核模块在插入卸载时都会要转到 “/lib/modules/内核版本号/ ” 这个目录里。所以只要建立这个目录就行了。
+在目标板执行
+#mkdir -p /lib/modules/$(uname -r)
+
+
+------------------------------------------------
+setprop service.adb.tcp.port 5555
+stop adbd
+start adbd
+-------------------------
