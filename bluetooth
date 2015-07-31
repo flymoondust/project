@@ -1,0 +1,5 @@
+private final boolean isBluetoothPersistedStateOn() {
+        return Settings.Global.getInt(mContentResolver,
+                Settings.Global.BLUETOOTH_ON, 0) != BLUETOOTH_OFF;
+    }
+
